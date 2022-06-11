@@ -141,9 +141,7 @@ class Bot {
     imprimir(){
         console.log('Nombre: '+ this.name);
     }
-
-    
-            
+     
     delay(time) {
         return new Promise(function(resolve) { 
             setTimeout(resolve, time)
