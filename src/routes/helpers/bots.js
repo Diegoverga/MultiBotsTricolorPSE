@@ -18,7 +18,7 @@ class Bot {
         return new Promise(async (resolve, reject)=>{
             try {
                 this.Browser = await puppeteer.launch({
-                    headless: false,
+                    headless: true,
                     args: ['--no-sandbox', '--disable-setuid-sandbox']
                 });
                 this.Page = await this.Browser.newPage();            
