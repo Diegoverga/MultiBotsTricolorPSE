@@ -6,6 +6,7 @@ const path = require('path');
 const engine = require('ejs-mate');
 const flash = require('connect-flash');
 const session = require('express-session');
+const favicon = require('serve-favicon');
 
 
 //settings
@@ -44,6 +45,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + 'index.html');
 });
 
+app.use(favicon(path.join(__dirname, 'public/img/icons', 'favicon.ico')));
 //starting the server
 app.listen(app.get('port'), () => {
     console.log('Server on port ' + app.get('port'));
