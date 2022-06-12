@@ -28,6 +28,7 @@ class Bot {
                     width:168,
                     height:48
                 }});
+                await this.Page.screenshot({path:`./src/public/img/bots/screen.jpg`})
                 await this.Page.waitForSelector('#id_cliente');
                 resolve(true)
             } catch (error) {
