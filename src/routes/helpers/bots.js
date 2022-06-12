@@ -22,13 +22,13 @@ class Bot {
                 });
                 this.Page = await this.Browser.newPage();            
                 await this.Page.goto('https://www.psepagos.co/psehostingui/ShowTicketOffice.aspx?ID=262');
+                await this.Page.screenshot({path:`./src/public/img/bots/screen.jpg`});
                 await this.Page.screenshot({path:`./src/public/img/bots/${this.name}.jpg`, clip:{
                     x:462,
                     y:339,
                     width:168,
                     height:48
                 }});
-                await this.Page.screenshot({path:`./src/public/img/bots/screen.jpg`})
                 await this.Page.waitForSelector('#id_cliente');
                 resolve(true)
             } catch (error) {
