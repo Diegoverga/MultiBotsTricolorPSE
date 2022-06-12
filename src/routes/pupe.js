@@ -38,7 +38,8 @@ router.get('/', async (req, res)=>{
                 })
                 .catch(data => {
                     Bots = Bots.splice(0, Bots.length-1);
-                    res.send('Error');
+                    // res.send('Error');
+                    res.render('CapchaBot');
                 })
             break;
         }
