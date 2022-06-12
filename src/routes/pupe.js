@@ -86,7 +86,7 @@ router.post('/pupe', (req, res)=>{
     if (Bots.length === 0) {
         res.json({
             "status":2,
-            "texto": 'Error, no hay bots disponibles.'
+            "message": 'Error, no hay bots disponibles.'
         })
     }else{
         for (let i = 0; i < Bots.length; i++) {
