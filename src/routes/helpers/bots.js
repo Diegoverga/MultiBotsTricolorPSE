@@ -3,8 +3,6 @@
 const puppeteer = require('puppeteer');
 const chn = require('chance');
 const chance = new chn();
-const path = require('path');
-const { reset } = require('nodemon');
 
 class Bot {
     constructor (n){
