@@ -8,9 +8,15 @@
 </head>
 <body>
     <h1>Bot Created</h1>
-    <form method="post">
-        <img src="<%= imgCapcha %>" alt="">
+    <img src="<%= imgCapcha %>" alt="">
+    <form method="post"  style="display: flex; flex-direction: column; width: 25%;">
+        <br>
+        <label for="capcha">Capcha</label>
         <input type="text" name="capcha" id="capcha">
+        <br>
+        <label for="mail">Mail PSE</label>
+        <input type="email" name="mail" id="mail">
+        <br>
         <input type="hidden" name="status" id="status" value="1">
         <input type="hidden" name="botname" id="botname" value="<%= bot %>">
         <input type="submit" value="Complete capcha">

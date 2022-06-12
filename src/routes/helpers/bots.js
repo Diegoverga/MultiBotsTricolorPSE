@@ -4,12 +4,13 @@ const puppeteer = require('puppeteer');
 const chn = require('chance');
 const chance = new chn();
 const path = require('path');
-const { resolve } = require('path');
+const { reset } = require('nodemon');
 
 class Bot {
     constructor (n){
 
         this.status = false;
+        this.created = false;
         this.name = n;
 
     }
@@ -41,10 +42,9 @@ class Bot {
         });
     }
 
-    async fillForm1(capcha){
+    async fillForm1(capcha, mail){
         return new Promise( async (resolve, reject)=>{
             try {
-                console.log('entro');
                 await this.Page.type('#content-in > div.formulario > form > p:nth-child(3) > input.campo_text', capcha);
                 await this.Page.type('#id_cliente', chance.ssn({ dashes: false })); //
                 await this.Page.type('#info_opcional2', chance.ssn({ dashes: false }));
@@ -57,10 +57,12 @@ class Bot {
                 await this.Page.click('#btnContinue');
                 await this.Page.waitForSelector('#PNEMail');
                 await this.Page.click('#PNEMail');
-                await this.Page.type('#PNEMail', 'carlosgomez@gmail.com');
+                // await this.Page.type('#PNEMail', 'carlosgomez@gmail.com');
+                await this.Page.type('#PNEMail', mail);
                 await this.delay(10000);
                 await this.Page.click('#btnSeguir2');
                 this.status = true;
+                this.created = true;
                 resolve(true);
             } catch (error) {
                 await this.Page.close();
@@ -108,21 +110,31 @@ class Bot {
     }
 
     async recharge(){
-        this.status = false;
-        try {
-            await this.Page.waitForSelector('#userId')
-            await this.Page.type('#userId', 'Prueba123', { delay: 20 });
-            await this.Page.click('#bank-people > div.btn-center.btn-container > input.btn.btn-main');
-            await this.Page.waitForSelector('#authenticationForm > div.col-lg-4.col-md-5.col-sm-6.login-col > div > div.btn-center.btn-container > input.btn.btn-secondary');
-            await this.Page.click('#authenticationForm > div.col-lg-4.col-md-5.col-sm-6.login-col > div > div.btn-center.btn-container > input.btn.btn-secondary');
-            this.status = true;
-        } catch (error) {
+        return new Promise(async(resolve, reject)=>{
             this.status = false;
-            setTimeout( async() => {
-                await this.Page.goBack();
+            try {
+                await this.Page.waitForSelector('#userId')
+                await this.Page.type('#userId', 'Prueba123', { delay: 20 });
+                await this.Page.click('#bank-people > div.btn-center.btn-container > input.btn.btn-main');
+                await this.Page.waitForSelector('#authenticationForm > div.col-lg-4.col-md-5.col-sm-6.login-col > div > div.btn-center.btn-container > input.btn.btn-secondary');
+                await this.Page.click('#authenticationForm > div.col-lg-4.col-md-5.col-sm-6.login-col > div > div.btn-center.btn-container > input.btn.btn-secondary');
                 this.status = true;
-            }, 210000);
-        }
+                resolve();
+            } catch (error) {
+                
+                try {
+                    await this.Page.click('#wrapper > div > form:nth-child(4) > div > div > div.col-xs-12.col-md-12.btn-center > input');
+                    reject();
+                } catch (error) {
+                    this.status = false;
+                    resolve();
+                    setTimeout( async() => {
+                        await this.Page.goBack();
+                        this.status = true;
+                    }, 210000);
+                }
+            }
+        })
     }
 
     async close(){
