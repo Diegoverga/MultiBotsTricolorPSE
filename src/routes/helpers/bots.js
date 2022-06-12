@@ -32,6 +32,7 @@ class Bot {
                 await this.Page.waitForSelector('#id_cliente');
                 resolve(true)
             } catch (error) {
+                console.log(error);
                 await this.Page.close();
                 await this.Browser.close();
                 reject(false)
