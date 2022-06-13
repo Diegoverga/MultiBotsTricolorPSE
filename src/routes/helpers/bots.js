@@ -50,6 +50,11 @@ class Bot {
                 await this.Page.type('#total_con_iva', `${parseInt(Math.random()*100000)}`);
                 await this.Page.type('#descripcion_pago', 'Renta');
                 await this.Page.type('#nombre_cliente', chance.name());
+                await this.Page.on('dialog', async(dialog)=>{
+                    console.log('Dialog');
+                    await this.delay(2000)
+                    await dialog.accept();
+                });
                 await this.Page.click('#btnPay');
                 await this.Page.waitForSelector('#listBanks > option:nth-child(19)');
                 await this.Page.click('#listBanks > option:nth-child(19)');
@@ -59,13 +64,23 @@ class Bot {
                 // await this.Page.type('#PNEMail', 'carlosgomez@gmail.com');
                 await this.Page.type('#PNEMail', mail);
                 await this.delay(10000);
+                await this.Page.on('dialog', async(dialog)=>{
+                    console.log('Dialog');
+                    await this.delay(2000)
+                    await dialog.accept();
+                });
                 await this.Page.click('#btnSeguir2');
+                await this.Page.waitForSelector('#userId');
                 this.status = true;
                 this.created = true;
                 resolve(true);
             } catch (error) {
-                await this.Page.close();
-                await this.Browser.close();
+                try {
+                    await this.Page.close();
+                    await this.Browser.close();
+                } catch (error) {
+                    
+                }
                 reject(false);
             }
         });

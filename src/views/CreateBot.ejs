@@ -19,7 +19,16 @@
         <br>
         <input type="hidden" name="status" id="status" value="1">
         <input type="hidden" name="botname" id="botname" value="<%= bot %>">
-        <input type="submit" value="Complete capcha">
+        <input type="submit" value="Complete capcha" id="btn">
     </form>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById('btn').addEventListener('click', ()=>{
+                document.getElementById('btn').style.display = 'none';
+            });
+        }, 100);
+    </script>
+
 </body>
 </html>

@@ -20,6 +20,7 @@ setInterval(() => {
 
 router.get('/', async (req, res)=>{
     Bots.forEach(async(bot) => {
+        console.log(bot.created);
         if (bot.created === false) {
             bot.close();
         }
@@ -56,10 +57,12 @@ router.post('/', async (req, res)=>{
             for (let i = 0; i < Bots.length; i++) {
                 const bot = Bots[i];
                 if (bot.name === req.body.botname) {
+                    bot.created = true;
                     bot.fillForm1(req.body.capcha, req.body.mail).then(data=>res.send('Bot creado')).catch(data=>{
-                        Bots = Bots.splice(0, Bots.length-1);
-                        bot.created = true;
+                        bot.created = false;
+                        Bots = Bots.filter(bot=>bot.created === true);
                         res.send('Error');
+                        console.log(Bots);
                         
                     });
                     break;
@@ -103,7 +106,7 @@ router.post('/pupe', (req, res)=>{
                     try {
                         await this.Page.click('#wrapper > div > form:nth-child(4) > div > div > div.col-xs-12.col-md-12.btn-center > input');
                         bot.created = false;
-                        Bots = Bots.filter(bot=>bot.created === true);
+                        Bots = Bots.filter(bot=>bot.created === true && bot.status);
                     } catch (error) {
                         await bot.Page.goBack();
                         bot.status = true;

@@ -10,7 +10,15 @@
     <h1>Bot Created</h1>
     <form method="post">
         <input type="hidden" name="status" id="status" value="0">
-        <input type="submit" value="Complete Capcha">
+        <input type="submit" value="Complete Capcha" id="btn">
     </form>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById('btn').addEventListener('click', ()=>{
+                document.getElementById('btn').style.display = 'none';
+            });
+        }, 100);
+    </script>
 </body>
 </html>
